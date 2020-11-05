@@ -37,7 +37,7 @@
                         <RadioButton Name="rdPreferred" Content="Preferred Share" HorizontalAlignment="Left"></RadioButton>
 					</StackPanel>
 
-                    <Button Name="btnCreate" Width="300" Height="50" Content="Create"></Button>
+                    <Button Name="btnCreate" Width="300" Height="50" Content="Create" Click="btnCreate_Click"></Button>
 
                 </StackPanel>
             </TabItem>

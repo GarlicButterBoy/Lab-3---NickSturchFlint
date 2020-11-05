@@ -51,6 +51,22 @@
 		                <Label Content="Number of Common Shares Sold:"/>
                         <TextBlock Name="txtCommonSold" HorizontalAlignment="Left"></TextBlock>
 
+                        <!--Number of Common Shares Sold-->
+                        <Label Content="Number of Preferred Shares Sold:"/>
+                        <TextBlock Name="txtPreferredSold" HorizontalAlignment="Left"></TextBlock>
+
+                        <!--Revenue Generated-->
+                        <Label Content="Revenue Generated:"/>
+                        <TextBlock Name="txtRevenue" HorizontalAlignment="Left"></TextBlock>
+
+                        <!--Number of Common Shares Available-->
+                        <Label Content="Number of Common Shares Available:"/>
+                        <TextBlock Name="txtCommonAvailable" HorizontalAlignment="Left"></TextBlock>
+
+                        <!--Number of Preferred Shares Available-->
+                        <Label Content="Number of Preferred Shares Available:"/>
+                        <TextBlock Name="txtPreferredAvailable" HorizontalAlignment="Left"></TextBlock>
+
                     </StackPanel>
 
                 </StackPanel>

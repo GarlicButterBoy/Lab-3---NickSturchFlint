@@ -149,11 +149,20 @@ namespace Lab_3___NickSturchFlint
                         conn.Open();
 
                         //Prepare and Execute Query
-                        string retrieveSharesSold = "SELECT SUM(shares) FROM buyers";
-                        SqlCommand fourthCommand = new SqlCommand(retrieveSharesSold, conn);
+                        //Common Shares
+                        string retrieveCommonSold = "SELECT SUM(shares) FROM buyers WHERE shareType = 'Common'";
+                        SqlCommand fourthCommand = new SqlCommand(retrieveCommonSold, conn);
 
-                        int soldShares = Convert.ToInt32(fourthCommand.ExecuteScalar());
-                        txtCommonSold.Text = soldShares.ToString();
+                        //Preferred Shares
+                        string retrievePreferredSolde = "SELECT SUM(shares) FROM buyers WHERE shareType = 'Preferred'";
+                        SqlCommand fifthCommand = new SqlCommand(retrievePreferredSolde, conn);
+
+
+                        int commonShares = Convert.ToInt32(fourthCommand.ExecuteScalar());
+                        txtCommonSold.Text = commonShares.ToString();
+
+                        int preferredShares = Convert.ToInt32(fifthCommand.ExecuteScalar());
+                        txtPreferredSold.Text = preferredShares.ToString();
                     }
                     catch (Exception ex)
                     {

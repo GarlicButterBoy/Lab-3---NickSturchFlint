@@ -1,0 +1,70 @@
+﻿<Window x:Class="Lab_3___NickSturchFlint.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab_3___NickSturchFlint"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+    <Grid>
+
+        <TabControl FontSize="12" SelectionChanged="TabControl_SelectionChanged">
+            <TabItem Header="Create Entry">
+
+                <StackPanel Orientation="Vertical" Margin="40">
+					<!--Buyers Name Text Box-->
+	                <StackPanel Orientation="Vertical" Margin="20">
+	                    <Label Content="Buyer's Name:"></Label>
+                        <TextBox Name="txtName" Width="200" Background="Gray" HorizontalAlignment="Left"></TextBox>
+                    </StackPanel>
+
+					<!--Number of Shares Text Box-->
+					<StackPanel Orientation="Vertical" Margin="20">
+						<Label Content="Number of Shares:"></Label>
+						<TextBox Name="txtShares" Width="200" Background="Gray" HorizontalAlignment="Left"></TextBox>
+					</StackPanel>
+
+					<!--Date Selection-->
+					<StackPanel Orientation="Vertical" Margin="20">
+						<Label Content="Date Purchased:"></Label>
+                        <DatePicker Name="dtPicker" Background="Gray" Width="200" HorizontalAlignment="Left"></DatePicker>
+					</StackPanel>
+
+					<!--Share Type-->
+					<StackPanel Orientation="Vertical" Margin="20">
+						<Label Content="Share Type:"></Label>
+                        <RadioButton Name="rdCommon" Content="Common Share" HorizontalAlignment="Left"></RadioButton>
+                        <RadioButton Name="rdPreferred" Content="Preferred Share" HorizontalAlignment="Left"></RadioButton>
+					</StackPanel>
+
+                    <Button Name="btnCreate" Width="300" Height="50" Content="Create"></Button>
+
+                </StackPanel>
+            </TabItem>
+
+            <!--View Summary Header-->
+            <TabItem Header="View Summary">
+                <StackPanel Orientation="Vertical" Margin="40">
+	                <StackPanel Orientation="Vertical" Margin="20">
+
+                        <!--Number of Common Shares Sold-->
+		                <Label Content="Number of Common Shares Sold:"/>
+                        <TextBlock Name="txtCommonSold" HorizontalAlignment="Left"></TextBlock>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </TabItem>
+
+            <!--View Entries Tab Header-->
+            <TabItem Header="View Entries">
+
+                <DataGrid Name="viewGrid"/>
+
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>

@@ -158,7 +158,7 @@ namespace Lab_3___NickSturchFlint
                         SqlCommand fifthCommand = new SqlCommand(retrievePreferredSolde, conn);
 
                         //Revenue Generated
-                  //      string revenue = "";
+                  //       string revenue = "";
                   //      SqlCommand sixthCommand = new SqlCommand(revenue, conn);
 
                         //Common Available

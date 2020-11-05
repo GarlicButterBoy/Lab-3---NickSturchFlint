@@ -157,12 +157,35 @@ namespace Lab_3___NickSturchFlint
                         string retrievePreferredSolde = "SELECT SUM(shares) FROM buyers WHERE shareType = 'Preferred'";
                         SqlCommand fifthCommand = new SqlCommand(retrievePreferredSolde, conn);
 
+                        //Revenue Generated
+                  //      string revenue = "";
+                  //      SqlCommand sixthCommand = new SqlCommand(revenue, conn);
 
+                        //Common Available
+                        string availableCommon = "SELECT numCommonShares FROM shares";
+                        SqlCommand seventhCommand = new SqlCommand(availableCommon, conn);
+
+                        //Preferred Available
+                        string availablePreferred = "SELECT numPreferredShares FROM shares";
+                        SqlCommand eigthCommand = new SqlCommand(availablePreferred, conn);
+
+                        //Updating the Text Blocks
+                        //Common Sold
                         int commonShares = Convert.ToInt32(fourthCommand.ExecuteScalar());
                         txtCommonSold.Text = commonShares.ToString();
-
+                        //Preferred Sold
                         int preferredShares = Convert.ToInt32(fifthCommand.ExecuteScalar());
                         txtPreferredSold.Text = preferredShares.ToString();
+                        //Revenue
+
+                        //Common Available
+                        int commonSharesAvailable = Convert.ToInt32(seventhCommand.ExecuteScalar());
+                        commonSharesAvailable = commonSharesAvailable - int.Parse(txtCommonSold.Text);
+                        txtCommonAvailable.Text = commonSharesAvailable.ToString();
+                        //Preferred Available
+                        int preferredSharesAvailable = Convert.ToInt32(eigthCommand.ExecuteScalar());
+                        preferredSharesAvailable = preferredSharesAvailable - int.Parse(txtPreferredSold.Text);
+                        txtPreferredAvailable.Text = preferredSharesAvailable.ToString();
                     }
                     catch (Exception ex)
                     {

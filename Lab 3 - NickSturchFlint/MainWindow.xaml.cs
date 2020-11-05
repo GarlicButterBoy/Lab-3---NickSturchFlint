@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Lab_3___NickSturchFlint
 {
@@ -106,6 +107,33 @@ namespace Lab_3___NickSturchFlint
             }
         }
 
+        private void FillDataGrid()
+        {
+            try
+            {
+                //Connect to the db
+                string connectString = Properties.Settings.Default.connect_string;
+                SqlConnection conn = new SqlConnection(connectString);
+                conn.Open();
+
+                //Query the db
+                string selectQuery = "SELECT * FROM buyers";
+                SqlCommand commandQuery = new SqlCommand(selectQuery, conn);
+
+                //Retrieve the data
+                SqlDataAdapter sda = new SqlDataAdapter(commandQuery);
+                DataTable dt = new DataTable("Buyers");
+
+                //Set the data
+                sda.Fill(dt);
+                viewGrid.ItemsSource = dt.DefaultView;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
@@ -134,6 +162,8 @@ namespace Lab_3___NickSturchFlint
                     break;
 
                 case "View Entries":
+
+                    FillDataGrid();
 
                     break;
 

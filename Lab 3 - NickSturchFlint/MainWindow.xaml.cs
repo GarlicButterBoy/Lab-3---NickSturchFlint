@@ -157,9 +157,31 @@ namespace Lab_3___NickSturchFlint
                         string retrievePreferredSolde = "SELECT SUM(shares) FROM buyers WHERE shareType = 'Preferred'";
                         SqlCommand fifthCommand = new SqlCommand(retrievePreferredSolde, conn);
 
+
                         //Revenue Generated
-                  //       string revenue = "";
-                  //      SqlCommand sixthCommand = new SqlCommand(revenue, conn);
+                        string retrieveDate = "SELECT shares, DATEDIFF(DAY, '1990-01-01', datePurchased) AS days FROM buyers WHERE shareType = 'Common' OR shareType = 'Preferred'"; //So far just common
+                        //Creating a hidden table to pull the data from later
+                        SqlDataAdapter dateCommand = new SqlDataAdapter(retrieveDate, conn);
+                        DataTable dt = new DataTable();
+                        dateCommand.Fill(dt);
+
+                        //variables to store data in foreach loop
+                        string date = "";
+                        int revenue = 0;
+                        int numShares;
+                        //Run through each row on the hidden table
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            //Stores an int based on the date in the row
+                            date = row["days"].ToString();
+                            //Stores the number of shares in a row
+                            numShares = (int)row["shares"];
+                            //Generates random price for stocks
+                            Random rand = new Random();
+                            int money = rand.Next(int.Parse(date));
+                            //Calculates the money made
+                            revenue += money * numShares;
+                        }
 
                         //Common Available
                         string availableCommon = "SELECT numCommonShares FROM shares";
@@ -177,7 +199,7 @@ namespace Lab_3___NickSturchFlint
                         int preferredShares = Convert.ToInt32(fifthCommand.ExecuteScalar());
                         txtPreferredSold.Text = preferredShares.ToString();
                         //Revenue
-
+                        txtRevenue.Text = revenue.ToString();
                         //Common Available
                         int commonSharesAvailable = Convert.ToInt32(seventhCommand.ExecuteScalar());
                         commonSharesAvailable = commonSharesAvailable - int.Parse(txtCommonSold.Text);

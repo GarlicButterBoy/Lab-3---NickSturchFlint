@@ -32,74 +32,110 @@ namespace Lab_3___NickSturchFlint
         {
             try
             {
-                //grab values
-                string name = txtName.Text;
-                int shares = int.Parse(txtShares.Text);
-                string date = dtPicker.SelectedDate.ToString();
-                string shareType = "";
-                //Check the radio buttons for share type
-                if(rdCommon.IsChecked == true)
-                {
-                    shareType = "Common";
-                }
-                else if (rdPreferred.IsChecked == true)
-                {
-                    shareType = "Preferred";
-                }
 
-                //connect to the db
-                string connectString = Properties.Settings.Default.connect_string;
-                SqlConnection conn = new SqlConnection(connectString);
-                conn.Open();
-
-                //Insert Query
-                string insertString = "INSERT INTO buyers (name, shares, datePurchased, shareType) VALUES ('" + name + "', '" + shares + "', '" + date + "', '" + shareType + "')";
-                SqlCommand command = new SqlCommand(insertString, conn);
-                command.ExecuteNonQuery();
-
-                //Depending on Radio Button Selection
-                string selectionQuery = "";
-                if (shareType == "Common")
+                //Validations
+                //If any of the textboxes are empty, do not add it to the database
+                if (txtName.Text == string.Empty || txtShares.Text == string.Empty || dtPicker.SelectedDate == null)
                 {
-                    selectionQuery = "SELECT numCommonShares FROM shares";
-                }
-                else if (shareType == "Preferred")
-                {
-                    selectionQuery = "SELECT numPreferredShares FROM shares";
-                }
-
-                SqlCommand secondCommand = new SqlCommand(selectionQuery, conn);
-                int availableShares = Convert.ToInt32(secondCommand.ExecuteScalar());
-
-                availableShares = availableShares - shares;
-
-                if(availableShares < 0) //there are not enough shares
-                {
-                    MessageBox.Show("Sorry, there aren't enough shares left.");
-                }
-                else //there are enough shares
-                {
-                    string updateQuery = "";
-                    if(shareType == "Common")
-                    {
-                        updateQuery = "UPDATE shares SET numCommonShares = '" + availableShares + "' ";
-                        SqlCommand thirdCommand = new SqlCommand(updateQuery, conn);
-                        thirdCommand.ExecuteScalar();
-                    }
-                    else if (shareType == "Preferred")
-                    {
-                        updateQuery = "UPDATE shares SET numPreferredShares = '" + availableShares + "' ";
-                        SqlCommand thirdCommand = new SqlCommand(updateQuery, conn);
-                        thirdCommand.ExecuteScalar();
-                    }
-                    //Show that update was successful
-                    MessageBox.Show("Successfully added share purchase!");
+                    MessageBox.Show("None of the fields can be empty! Please fill in the required information.");
                     //Reset text boxes and connections
                     txtName.Text = string.Empty;
                     txtShares.Text = string.Empty;
                     dtPicker.SelectedDate = null;
-                    conn.Close();
+                    rdCommon.IsChecked = false;
+                    rdPreferred.IsChecked = false;
                 }
+                else if (rdCommon.IsChecked == false && rdPreferred.IsChecked == false)
+                {
+                    MessageBox.Show("Must select a share type!");
+                    rdCommon.IsChecked = false;
+                    rdPreferred.IsChecked = false;
+                }
+                else
+                {
+
+                    //Make sure Shares textbox is a whole number
+                    int shares;
+                    if (int.TryParse(txtShares.Text, out shares))
+                    {
+                        //grab values
+                        string name = txtName.Text;
+                        string date = dtPicker.SelectedDate.ToString();
+                        string shareType = "";
+                        //Check the radio buttons for share type
+                        if (rdCommon.IsChecked == true)
+                        {
+                            shareType = "Common";
+                        }
+                        else if (rdPreferred.IsChecked == true)
+                        {
+                            shareType = "Preferred";
+                        }
+
+                        //connect to the db
+                        string connectString = Properties.Settings.Default.connect_string;
+                        SqlConnection conn = new SqlConnection(connectString);
+                        conn.Open();
+
+                        //Insert Query
+                        string insertString = "INSERT INTO buyers (name, shares, datePurchased, shareType) VALUES ('" + name + "', '" + shares + "', '" + date + "', '" + shareType + "')";
+                        SqlCommand command = new SqlCommand(insertString, conn);
+                        command.ExecuteNonQuery();
+
+                        //Depending on Radio Button Selection
+                        string selectionQuery = "";
+                        if (shareType == "Common")
+                        {
+                            selectionQuery = "SELECT numCommonShares FROM shares";
+                        }
+                        else if (shareType == "Preferred")
+                        {
+                            selectionQuery = "SELECT numPreferredShares FROM shares";
+                        }
+
+                        SqlCommand secondCommand = new SqlCommand(selectionQuery, conn);
+                        int availableShares = Convert.ToInt32(secondCommand.ExecuteScalar());
+
+                        availableShares = availableShares - shares;
+
+                        if (availableShares < 0) //there are not enough shares
+                        {
+                            MessageBox.Show("Sorry, there aren't enough shares left.");
+                        }
+                        else //there are enough shares
+                        {
+                            string updateQuery = "";
+                            if (shareType == "Common")
+                            {
+                                updateQuery = "UPDATE shares SET numCommonShares = '" + availableShares + "' ";
+                                SqlCommand thirdCommand = new SqlCommand(updateQuery, conn);
+                                thirdCommand.ExecuteScalar();
+                            }
+                            else if (shareType == "Preferred")
+                            {
+                                updateQuery = "UPDATE shares SET numPreferredShares = '" + availableShares + "' ";
+                                SqlCommand thirdCommand = new SqlCommand(updateQuery, conn);
+                                thirdCommand.ExecuteScalar();
+                            }
+                            //Show that update was successful
+                            MessageBox.Show("Successfully added share purchase!");
+                            //Reset text boxes and connections
+                            txtName.Text = string.Empty;
+                            txtShares.Text = string.Empty;
+                            dtPicker.SelectedDate = null;
+                            rdCommon.IsChecked = false;
+                            rdPreferred.IsChecked = false;
+                            conn.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Shares MUST be a WHOLE Number!");
+                        txtShares.Text = string.Empty;
+                    }
+
+                }
+
             }
             catch (Exception ex)
             {

@@ -24,5 +24,15 @@ namespace Lab_3___NickSturchFlint
             double value = this.shares * commonShareRate;
             return value;
         }
+
+        public override string ToString()
+        {
+            string output;
+            output = "Buyer Name    : " + buyerName + "\n";
+            output += "Bought Date   : " + buyDate + "\n";
+            output += "Share's Bought: " + shares + "\n";
+            output += "Total Value   : " + ShareValue();
+            return output;
+        }
     }
 }

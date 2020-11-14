@@ -66,10 +66,14 @@ namespace Lab_3___NickSturchFlint
                         if (rdCommon.IsChecked == true)
                         {
                             shareType = "Common";
+                            CommonShare normalShare = new CommonShare(name, date, shares);
+                            MessageBox.Show(normalShare.ToString());
                         }
                         else if (rdPreferred.IsChecked == true)
                         {
                             shareType = "Preferred";
+                            PreferredShare expensiveShare = new PreferredShare(name, date, shares);
+                            MessageBox.Show(expensiveShare.ToString());
                         }
 
                         //connect to the db

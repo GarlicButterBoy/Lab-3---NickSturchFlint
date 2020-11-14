@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab_3___NickSturchFlint
 {
-    class Share
+    class Share: IShare
     {
         //Data Members
         protected string buyerName;
@@ -41,8 +41,18 @@ namespace Lab_3___NickSturchFlint
         //Virtual Method
         public virtual double ShareValue()
         {
-            double value = this.shares * 42;
+            double value = this.shares * 42; //Default calculation uses Common pricing as a fall back
             return value;
+        }
+
+        public override string ToString()
+        {
+            string output;
+            output =  "Buyer Name    : " + buyerName + "\n";
+            output += "Bought Date   : " + buyDate + "\n";
+            output += "Share's Bought: " + shares + "\n";
+            output += "Total Value   : " + ShareValue();
+            return output;
         }
     }
 }

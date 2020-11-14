@@ -8,5 +8,21 @@ namespace Lab_3___NickSturchFlint
 {
     class PreferredShare: Share
     {
+        //Data Members
+        const double preferredShareRate = 100.0;
+
+        //Constructor
+        public PreferredShare(string name, string date, double shares) : base(name, date, shares)
+        {
+            this.buyerName = base.buyerName;
+            this.buyDate = base.buyDate;
+            this.shares = base.shares;
+        }
+        //Overridden Method
+        public override double ShareValue()
+        {
+            double value = this.shares * preferredShareRate;
+            return value;
+        }
     }
 }

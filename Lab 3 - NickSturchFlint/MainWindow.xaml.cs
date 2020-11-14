@@ -22,14 +22,16 @@ namespace Lab_3___NickSturchFlint
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        List<Share> shareList = new List<Share>();
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
 
@@ -58,6 +60,8 @@ namespace Lab_3___NickSturchFlint
                     int shares;
                     if (int.TryParse(txtShares.Text, out shares))
                     {
+                        //Everything is validated
+
                         //grab values
                         string name = txtName.Text;
                         string date = dtPicker.SelectedDate.ToString();
@@ -68,12 +72,14 @@ namespace Lab_3___NickSturchFlint
                             shareType = "Common";
                             CommonShare normalShare = new CommonShare(name, date, shares);
                             MessageBox.Show(normalShare.ToString());
+                            shareList.Add(normalShare);
                         }
                         else if (rdPreferred.IsChecked == true)
                         {
                             shareType = "Preferred";
                             PreferredShare expensiveShare = new PreferredShare(name, date, shares);
                             MessageBox.Show(expensiveShare.ToString());
+                            shareList.Add(expensiveShare);
                         }
 
                         //connect to the db
@@ -174,6 +180,27 @@ namespace Lab_3___NickSturchFlint
             }
         }
 
+        private void ConvertListToDataTable(List<Share> list)
+        {
+            //Create Table
+            DataTable table = new DataTable();
+
+            //Get Columns
+            int columns = 1;
+            //Create Columns
+            for (int i = 0; i < columns; i++)
+            {
+                table.Columns.Add("Recent Objects");
+            }
+
+            foreach (var array in list)
+            {
+                table.Rows.Add(array);
+            }
+
+            viewObjectGrid.ItemsSource = table.DefaultView;
+        }
+
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
@@ -262,6 +289,12 @@ namespace Lab_3___NickSturchFlint
                     break;
 
                 case "Create Entry":
+
+                    break;
+
+                case "View Objects":
+
+                    ConvertListToDataTable(shareList);
 
                     break;
             }

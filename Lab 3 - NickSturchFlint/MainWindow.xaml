@@ -80,6 +80,14 @@
 
             </TabItem>
 
+            <!--View Objects Tab Header-->
+            <TabItem Header="View Objects">
+
+	            <DataGrid Name="viewObjectGrid"/>
+
+            </TabItem>
+
+
         </TabControl>
 
     </Grid>
